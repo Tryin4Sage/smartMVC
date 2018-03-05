@@ -92,7 +92,23 @@ public class DispatcherServlet extends HttpServlet {
 		//方法返回值
 		Object returnVal = null;
 		try {
-			returnVal = meth.invoke(obj);
+			//看方法是否需要参数
+			@SuppressWarnings("rawtypes")
+			Class[] c= meth.getParameterTypes();
+			Object[] args = new Object[c.length];
+			if (c.length>0) {
+				for (int i = 0; i < c.length; i++) {
+					if (c[i]==HttpServletRequest.class) {
+						args[i] = request;
+					}
+					if (c[i]==HttpServletResponse.class) {
+						args[i] = response;
+					}
+				}
+				returnVal = meth.invoke(obj,args);
+			} else {
+				returnVal = meth.invoke(obj);
+			}
 			vr.process(returnVal,contextPath,request,response);
 			
 		} catch (Exception e) {

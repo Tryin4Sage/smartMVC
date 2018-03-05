@@ -9,6 +9,7 @@
 2.	base/web/DispatcherServlet	总控制器
 
 3.	base/controller/HelloContriller	业务逻辑	
+	添加业务
 
 web.xml配置
 context.xml存放业务逻辑类
